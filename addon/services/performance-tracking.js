@@ -30,7 +30,7 @@ export default Ember.Service.extend({
     var newTransitionData = {
       isInitial: false,
       start: window.performance.now(),
-      startTimestamp: (new Date()).getTime()
+      startTimestamp: performance.now()
     };
     this.set('currentTransition', newTransitionData);
   },
