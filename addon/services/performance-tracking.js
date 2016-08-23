@@ -21,18 +21,20 @@ export default Ember.Service.extend({
   currentTransition: {
     isInitial: true,
     start: 0,
-    startTimestamp: navigationStart
+    startTimestamp: navigationStart,
+    orgignRoute: null
   },
   /**
    * Create a new object that contains the start timstamp in milliseconds and start attribute using
    * window.performance.now. It is assumed that once this function is called, it is a subsequent transition
    * Store the new object in the service
    */
-  startTransition: function () {
+  startTransition: function (originRoute) {
     var newTransitionData = {
       isInitial: false,
       start: performanceNow(),
-      startTimestamp: navigationStart + performanceNow()
+      startTimestamp: navigationStart + performanceNow(),
+      originRoute: originRoute
     };
     this.set('currentTransition', newTransitionData);
   },

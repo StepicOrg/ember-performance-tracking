@@ -14,7 +14,8 @@ export default Ember.Mixin.create({
       return this._super.apply(this, arguments);
     },
     willTransition: function() {
-      this.get('perfTracking').startTransition();
+      var originRoute = this.get('routeName');
+      this.get('perfTracking').startTransition(originRoute);
       return this._super.apply(this, arguments);
     }
   }
