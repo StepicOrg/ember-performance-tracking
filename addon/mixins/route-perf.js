@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   perfTracking: Ember.inject.service('performance-tracking'),
-  actions: {
+  _actions: {
     /**
      * Schedule a function to call the endTransition function of the perfTracking service in afterRender run queue
      */
