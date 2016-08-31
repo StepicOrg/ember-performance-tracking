@@ -14,6 +14,7 @@ var performanceNow = function() {
 navigationStart = window.performance.timing ? window.performance.timing.navigationStart : performanceNow();
 
 export default Ember.Service.extend({
+  isFullySupported: window.performance && window.performance.getEntries && window.performance.timing,
   /**
    * Initialize the TransitionData object that holds information about a transition
    * @type {Object}
