@@ -16,7 +16,20 @@ export default Ember.Mixin.create({
     willTransition: function() {
       var originRoute = this.get('routeName');
       this.get('perfTracking').startTransition(originRoute);
-      return this._super.apply(this, arguments);
+      const result = this._super.apply(this, arguments);
+      // result may be true, false, some Object, undefined
+      // result is undefined if:
+      // 1. no handler for willTransition in current route
+      // 2. handler intentionally return undefined
+      //
+      // in case 1 we should return true instead of undefined
+      // and send event to next route
+      // in case 2 we should change handler
+      if (typeof result === "undefined") {
+        return true;
+      } else {
+        return result;
+      }
     }
   }
 });
