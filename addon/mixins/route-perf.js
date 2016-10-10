@@ -11,7 +11,12 @@ export default Ember.Mixin.create({
       Ember.run.scheduleOnce('afterRender', function () {
         self.get('perfTracking').endTransition(self.routeName, self.get('router.url'));
       });
-      return this._super.apply(this, arguments);
+      const result = this._super.apply(this, arguments);
+      if (typeof result === "undefined") {
+        return true;
+      } else {
+        return result;
+      }
     },
     willTransition: function() {
       var originRoute = this.get('routeName');
