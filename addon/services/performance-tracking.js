@@ -3,18 +3,19 @@ import Ember from 'ember';
 /**
  * If the performance API is missing, polyfill using Date
  */
+var IS_FASTBOOT = (typeof FastBoot !== 'undefined');
 var navigationStart = 0;
 var performanceNow = function() {
-  if ('performance' in window && typeof window.performance.now === 'function' && typeof fastboot === 'undefined') {
+  if (!IS_FASTBOOT && 'performance' in window && typeof window.performance.now === 'function' && typeof fastboot === 'undefined') {
     return window.performance.now();
   } else {
     return (new Date).getTime() - navigationStart;
   }
 };
-navigationStart = window.performance.timing ? window.performance.timing.navigationStart : performanceNow();
+navigationStart = (!IS_FASTBOOT && window.performance.timing) ? window.performance.timing.navigationStart : performanceNow();
 
 export default Ember.Service.extend({
-  isFullySupported: window.performance && window.performance.getEntries && window.performance.timing,
+  isFullySupported:!IS_FASTBOOT &&  window.performance && window.performance.getEntries && window.performance.timing,
   /**
    * Initialize the TransitionData object that holds information about a transition
    * @type {Object}
@@ -48,7 +49,7 @@ export default Ember.Service.extend({
    */
   endTransition: function (finalRouteName, finalPathName) {
     var transitionData = this.get('currentTransition');
-    transitionData.end = window.performance.now();
+    transitionData.end = performanceNow();
     transitionData.duration = transitionData.end - transitionData.start;
     transitionData.destinationRoute = finalRouteName;
     transitionData.url = finalPathName;
