@@ -24,7 +24,7 @@ export default Ember.Service.extend({
     isInitial: true,
     start: 0,
     startTimestamp: navigationStart,
-    orgignRoute: null
+    originRoute: null
   },
   /**
    * Create a new object that contains the start timstamp in milliseconds and start attribute using
