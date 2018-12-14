@@ -16,7 +16,7 @@ export default Ember.Mixin.create({
   },
 
   willTransition() {
-    var originRoute = this.get('routeName');
+    var originRoute = this.get('currentRouteName');
     this.get('perfTracking').startTransition(originRoute);
 
     this._super(...arguments);
